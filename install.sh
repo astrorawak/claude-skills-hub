@@ -11,8 +11,8 @@
 # ============================================================================
 set -uo pipefail
 
-SKILLS_DIR="${SKILLS_DIR:-$HOME/.claude/skills}"
-SRC_DIR="${SRC_DIR:-$HOME/.claude/skills-src}"
+CLAUDE_SKILLS_DIR="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
+CLAUDE_SKILLS_SRC_DIR="${CLAUDE_SKILLS_SRC_DIR:-$HOME/.claude/skills-src}"
 HUB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKIP="${SKIP:-}"
 MODE="${1:-install}"
@@ -40,11 +40,11 @@ declare -a PACKS=(
   "find-skills|vercel-labs/skills"
 )
 
-mkdir -p "$SKILLS_DIR" "$SRC_DIR"
+mkdir -p "$CLAUDE_SKILLS_DIR" "$CLAUDE_SKILLS_SRC_DIR"
 export PATH="$HOME/.local/bin:$PATH"
 
 clone_repo() { # $1 name $2 repo -> stdout path
-  local name="$1" repo="$2" dir="$SRC_DIR/$name"
+  local name="$1" repo="$2" dir="$CLAUDE_SKILLS_SRC_DIR/$name"
   if [[ -d "$dir/.git" ]]; then
     git -C "$dir" fetch -q --depth 1 origin && git -C "$dir" reset -q --hard origin/HEAD 2>/dev/null \
       || git -C "$dir" pull -q --depth 1 origin || warn "update $name gagal (pakai cache lokal)"
@@ -76,7 +76,7 @@ install_pack() { # $1 name $2 repo
   if [[ -z "$roots" ]]; then warn "$name: tidak ada SKILL.md — cek README $repo"; return 0; fi
   local n=0
   while IFS= read -r sd; do
-    local tgt="$SKILLS_DIR/$(basename "$sd")"
+    local tgt="$CLAUDE_SKILLS_DIR/$(basename "$sd")"
     rm -rf "$tgt"; mkdir -p "$tgt"
     cp -R "$sd/." "$tgt/"
     n=$((n+1))
@@ -85,9 +85,9 @@ install_pack() { # $1 name $2 repo
 }
 
 if [[ "$MODE" == "--verify" ]]; then
-  log "Skill di $SKILLS_DIR:"
-  find "$SKILLS_DIR" -maxdepth 2 -name SKILL.md 2>/dev/null | sed "s|$SKILLS_DIR/||;s|/SKILL.md||" | sort
-  log "Total: $(find "$SKILLS_DIR" -maxdepth 2 -name SKILL.md 2>/dev/null | wc -l | tr -d ' ') skill"
+  log "Skill di $CLAUDE_SKILLS_DIR:"
+  find "$CLAUDE_SKILLS_DIR" -maxdepth 2 -name SKILL.md 2>/dev/null | sed "s|$CLAUDE_SKILLS_DIR/||;s|/SKILL.md||" | sort
+  log "Total: $(find "$CLAUDE_SKILLS_DIR" -maxdepth 2 -name SKILL.md 2>/dev/null | wc -l | tr -d ' ') skill"
   exit 0
 fi
 
@@ -114,8 +114,8 @@ install_graphify() {
     # fallback manual dari sumber repo
     local dir; dir="$(clone_repo graphify Graphify-Labs/graphify)" || return 1
     if [[ -f "$dir/graphify/skill-claude.md" ]]; then
-      mkdir -p "$SKILLS_DIR/graphify"
-      cp "$dir/graphify/skill-claude.md" "$SKILLS_DIR/graphify/SKILL.md"
+      mkdir -p "$CLAUDE_SKILLS_DIR/graphify"
+      cp "$dir/graphify/skill-claude.md" "$CLAUDE_SKILLS_DIR/graphify/SKILL.md"
       log "  1 skill (fallback dari skill-claude.md). CLI graphify belum ada — jalankan: pip install --user graphifyy"
     else
       warn "graphify: butuh CLI resmi — jalankan manual: pip install --user graphifyy && graphify install"
@@ -127,7 +127,7 @@ install_graphify || true
 # --- gstack: clone ke skills dir + ./setup resmi -----------------------------
 if ! skipped "gstack"; then
   log "Pasang gstack (garrytan/gstack) ..."
-  gdir="$SKILLS_DIR/gstack"
+  gdir="$CLAUDE_SKILLS_DIR/gstack"
   if [[ -d "$gdir/.git" ]]; then git -C "$gdir" pull -q origin || warn "pull gstack gagal"
   else rm -rf "$gdir"; git clone -q --single-branch --depth 1 https://github.com/garrytan/gstack.git "$gdir" || fail "clone gstack gagal"; fi
   if [[ -x "$gdir/setup" ]]; then
@@ -149,14 +149,14 @@ install_plugin() { # $1 marketplace $2 slug $3 label
   fi
 }
 install_plugin "https://github.com/affaan-m/ECC" "ecc@ecc" "ECC (everything-claude-code)"
-install_plugin "thedotmack/claude-mem" "claude-mem@claude-mem" "claude-mem"
+install_plugin "thedotmack/claude-mem" "claude-mem@thedotmack" "claude-mem"
 
 # --- catatan blender MCP -------------------------------------------------------
 warn "blender-skills: skill 3D butuh Blender berjalan + addon BlenderMCP tersambung (N sidebar > BlenderMCP > Connect). Setup: https://github.com/ahujasid/blender-mcp"
 
 # --- simpan salinan hub + pointer global ---------------------------------------
-mkdir -p "$SRC_DIR/claude-skills-hub"
-rsync -a --exclude '.git' "$HUB_DIR/" "$SRC_DIR/claude-skills-hub/" 2>/dev/null || cp -R "$HUB_DIR"/. "$SRC_DIR/claude-skills-hub/" 2>/dev/null || true
+mkdir -p "$CLAUDE_SKILLS_SRC_DIR/claude-skills-hub"
+rsync -a --exclude '.git' "$HUB_DIR/" "$CLAUDE_SKILLS_SRC_DIR/claude-skills-hub/" 2>/dev/null || cp -R "$HUB_DIR"/. "$CLAUDE_SKILLS_SRC_DIR/claude-skills-hub/" 2>/dev/null || true
 
 GLOBAL_CLAUDE="$HOME/.claude/CLAUDE.md"
 mkdir -p "$HOME/.claude"; touch "$GLOBAL_CLAUDE"
@@ -174,6 +174,6 @@ EOF
   log "Pointer Skill Hub ditambahkan ke $GLOBAL_CLAUDE"
 fi
 
-N="$(find "$SKILLS_DIR" -maxdepth 2 -name SKILL.md 2>/dev/null | wc -l | tr -d ' ')"
-log "SELESAI. Total $N skill tersedia di $SKILLS_DIR — otomatis aktif di sesi Claude Code baru."
+N="$(find "$CLAUDE_SKILLS_DIR" -maxdepth 2 -name SKILL.md 2>/dev/null | wc -l | tr -d ' ')"
+log "SELESAI. Total $N skill tersedia di $CLAUDE_SKILLS_DIR — otomatis aktif di sesi Claude Code baru."
 log "Mesin baru: jalankan repo ini sekali. Update: jalankan ulang install.sh."

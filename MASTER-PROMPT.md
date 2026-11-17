@@ -20,7 +20,7 @@ You are operating in the **claude-skills-hub** repository — a one-run installe
 ## Phase 2 — Plugins (ECC & claude-mem)
 8. If `claude` CLI is present and functional headless: install the two plugins per the script output:
    - `claude plugin marketplace add https://github.com/affaan-m/ECC` then `claude plugin install ecc@ecc`
-   - `claude plugin marketplace add thedotmack/claude-mem` then `claude plugin install claude-mem@claude-mem`
+   - `claude plugin marketplace add thedotmack/claude-mem` then `claude plugin install claude-mem@thedotmack`
 9. If headless plugin install is not possible, output the exact two `/plugin ...` commands for me to run inside a Claude Code session, and note them as PENDING in the report.
 10. [ASK] before enabling claude-mem: it spawns a shadow agent that consumes extra tokens. Offer to keep it installed but disabled, or skip it, per my workflow preference (my machine already uses graphify for context efficiency).
 
