@@ -19,7 +19,7 @@ Satu repo untuk memasang **semua skill Claude Code hasil riset** (Nov 2026) seka
 | ECC plugin | [affaan-m/ECC](https://github.com/affaan-m/ECC) | 229 skills + 63 agents + hooks (via plugin) |
 | claude-mem plugin | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Memori persisten antar sesi |
 
-Katalog lengkap + tabel routing (kapan pakai apa): **[SKILLS.md](SKILLS.md)**.
+Katalog lengkap + tabel routing (kapan pakai apa): **[SKILLS.md](SKILLS.md)**. Master prompt siap-paste untuk Claude Code: **[MASTER-PROMPT.md](MASTER-PROMPT.md)**.
 
 ## Cara install — pilih salah satu
 
