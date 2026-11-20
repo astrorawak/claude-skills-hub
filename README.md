@@ -18,6 +18,7 @@ Satu repo untuk memasang **semua skill Claude Code hasil riset** (Nov 2026) seka
 | gstack (23 role) | [garrytan/gstack](https://github.com/garrytan/gstack) | Tim virtual: CEO/Eng/Design/QA/Security/Release |
 | ECC plugin | [affaan-m/ECC](https://github.com/affaan-m/ECC) | 229 skills + 63 agents + hooks (via plugin) |
 | claude-mem plugin | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Memori persisten antar sesi |
+| harness-engineering (lokal) | [walkinglabs/learn-harness-engineering](https://github.com/walkinglabs/learn-harness-engineering) | Harness repo: struktur + verifikasi + kesinambungan multi-sesi |
 
 Katalog lengkap + tabel routing (kapan pakai apa): **[SKILLS.md](SKILLS.md)**. Master prompt siap-paste untuk Claude Code: **[MASTER-PROMPT.md](MASTER-PROMPT.md)**. Panduan langkah-demi-langkah khusus **macOS**: **[SETUP-MAC.md](SETUP-MAC.md)**.
 

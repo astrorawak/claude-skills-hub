@@ -16,6 +16,7 @@ Semua skill di bawah terpasang permanen di `~/.claude/skills` (user scope = berl
 | Workflow startup penuh: review, QA, security, rilis | gstack: `/office-hours` `/review` `/qa` `/cso` `/ship` `/land-and-deploy` `/autoplan` `/pair-agent` `/browse` | [garrytan/gstack](https://github.com/garrytan/gstack) | 23 role. Butuh Bun v1.4.2+. **Pilih salah satu: gstack ATAU ECC** untuk workflow utama (tumpang tindih) |
 | Toolbox kolektif (229 skills, 63 agents, hooks) | plugin `ecc@ecc` | [affaan-m/ECC](https://github.com/affaan-m/ECC) | Install via `/plugin marketplace add https://github.com/affaan-m/ECC` + `/plugin install ecc@ecc`. Jangan stack manual + plugin |
 | Claude lupa konteks antar sesi | plugin `claude-mem` | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Spawn sesi shadow → konsumsi token tambahan; nyalakan hanya bila butuh |
+| "Harness engineering": project tanpa struktur, kerja multi-sesi, agent sering lupa klaim done palsu | `harness-engineering` → `/harness-engineering bootstrap\|start\|finish\|audit` | [walkinglabs/learn-harness-engineering](https://github.com/walkinglabs/learn-harness-engineering) (skill lokal di repo ini) | Bootstrap AGENTS.md/CLAUDE.md + init.sh + feature_list.json + progress log; verifikasi = bukti, bukan klaim |
 
 ## Aturan pemasangan untuk Claude
 

@@ -98,6 +98,14 @@ for pack in "${PACKS[@]}"; do
   install_pack "$name" "$repo" || true
 done
 
+# --- local skills bundled in this hub ---------------------------------------
+for sd in "$HUB_DIR"/local-skills/*/; do
+  [[ -f "${sd}SKILL.md" ]] || continue
+  tgt="$SKILLS_DIR/$(basename "$sd")"
+  rm -rf "$tgt"; mkdir -p "$tgt"; cp -R "$sd/." "$tgt/"
+  log "local skill terpasang: $(basename "$sd")"
+done
+
 # --- graphify: pakai installer resmi (CLI + skill registration) -------------
 install_graphify() {
   if skipped "graphify"; then warn "SKIP graphify"; return 0; fi
