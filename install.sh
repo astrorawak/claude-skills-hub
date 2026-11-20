@@ -101,7 +101,7 @@ done
 # --- local skills bundled in this hub ---------------------------------------
 for sd in "$HUB_DIR"/local-skills/*/; do
   [[ -f "${sd}SKILL.md" ]] || continue
-  tgt="$SKILLS_DIR/$(basename "$sd")"
+  tgt="$CLAUDE_SKILLS_DIR/$(basename "$sd")"
   rm -rf "$tgt"; mkdir -p "$tgt"; cp -R "$sd/." "$tgt/"
   log "local skill terpasang: $(basename "$sd")"
 done
